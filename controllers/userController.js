@@ -25,7 +25,7 @@ export const signup = async (req, res) => {
 
         res.clearCookie("auth_token", { //removing previous token of user if stored
             path: "/",
-            domain: "localhost",
+            domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
         });
@@ -71,7 +71,7 @@ export const login = async (req, res) => {
 
         res.clearCookie("auth_token", { //removing previous token of user if stored
             path: "/",
-            domain: "localhost",
+            domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
         });
@@ -81,7 +81,7 @@ export const login = async (req, res) => {
         expires.setDate(expires.getDate() + 7);
         res.cookie("auth_token", token, {
             path: "/",
-            domain: "localhost",
+            domain: "ask-gpt-backend.onrender.com",
             expires,
             httpOnly: true,
             signed: true,
@@ -99,7 +99,7 @@ export const logout = (req, res) => {
     try {
         res.clearCookie("auth_token", {
             path: "/",
-            domain: "localhost",
+            domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
         });
