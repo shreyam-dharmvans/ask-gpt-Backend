@@ -36,7 +36,7 @@ export const signup = async (req, res) => {
         expires.setDate(expires.getDate() + 7);
         res.cookie("auth_token", token, { //storing token in form of http cookie
             path: "/",
-            domain: "localhost",
+            domain: "ask-gpt-backend.onrender.com",
             expires,
             httpOnly: true,
             signed: true,
