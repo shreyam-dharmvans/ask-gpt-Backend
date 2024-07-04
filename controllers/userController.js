@@ -24,11 +24,12 @@ export const signup = async (req, res) => {
         let result = await newUser.save();
 
         res.clearCookie("auth_token", { //removing previous token of user if stored
-            path: "/",
+            //path: "/",
             // domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure: true
         });
 
 
@@ -36,12 +37,13 @@ export const signup = async (req, res) => {
         let expires = new Date();
         expires.setDate(expires.getDate() + 7);
         res.cookie("auth_token", token, { //storing token in form of http cookie
-            path: "/",
+            //path: "/",
             // domain: "ask-gpt-backend.onrender.com",
             expires,
             httpOnly: true,
             signed: true,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure: true
         });
 
 
@@ -72,23 +74,25 @@ export const login = async (req, res) => {
 
 
         res.clearCookie("auth_token", { //removing previous token of user if stored
-            path: "/",
+            // path: "/",
             // domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure: true
         });
 
         let token = createToken(user._id, user.email, "7d");
         let expires = new Date();
         expires.setDate(expires.getDate() + 7);
         res.cookie("auth_token", token, {
-            path: "/",
+            // path: "/",
             // domain: "ask-gpt-backend.onrender.com",
             expires,
             httpOnly: true,
             signed: true,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure: true
         });
 
         return res.status(200).json({ message: "OK" });
@@ -102,11 +106,12 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
     try {
         res.clearCookie("auth_token", {
-            path: "/",
+            // path: "/",
             // domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure: true
         });
 
         return res.status(200).json({ message: "OK" });
