@@ -12,6 +12,8 @@ if (process.env.NODE_ENV != "production") {
     dotenv.config();  //to access  env file variables
 }
 
+const PORT = process.env.PORT || 8080;
+
 
 //database connection
 main()
@@ -38,6 +40,6 @@ app.use("/api/v1/chat", chatRouter);
 
 
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     console.log("server is listening at port 8080");
 });
