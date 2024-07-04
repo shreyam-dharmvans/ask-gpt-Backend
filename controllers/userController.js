@@ -28,6 +28,7 @@ export const signup = async (req, res) => {
             // domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
+            sameSite: 'none'
         });
 
 
@@ -40,6 +41,7 @@ export const signup = async (req, res) => {
             expires,
             httpOnly: true,
             signed: true,
+            sameSite: 'none'
         });
 
 
@@ -74,6 +76,7 @@ export const login = async (req, res) => {
             // domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
+            sameSite: 'none'
         });
 
         let token = createToken(user._id, user.email, "7d");
@@ -85,6 +88,7 @@ export const login = async (req, res) => {
             expires,
             httpOnly: true,
             signed: true,
+            sameSite: 'none'
         });
 
         return res.status(200).json({ message: "OK" });
@@ -102,6 +106,7 @@ export const logout = (req, res) => {
             // domain: "ask-gpt-backend.onrender.com",
             httpOnly: true,
             signed: true,
+            sameSite: 'none'
         });
 
         return res.status(200).json({ message: "OK" });
