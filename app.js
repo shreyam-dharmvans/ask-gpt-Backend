@@ -27,7 +27,7 @@ async function main() {
     await mongoose.connect(process.env.MONGODB_URL);
 }
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://askgpt-ai.netlify.app", credentials: true }));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
