@@ -12,6 +12,10 @@ on :
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
+        env:
+          MONGODB_URL : ${{ secrets.MONGODB_URL }}
+          JWT_SECRET : ${{ secrets.JWT_SECRET }}
+          COOKIE_SECRET : ${{ secrets.COOKIE_SECRET }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
