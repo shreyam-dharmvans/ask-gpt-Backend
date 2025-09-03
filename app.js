@@ -43,3 +43,5 @@ app.use("/api/v1/chat", chatRouter);
 app.listen(PORT, () => {
     console.log("server is listening at port 8080");
 });
+
+export { app };
