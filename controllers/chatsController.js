@@ -1,13 +1,16 @@
+import { redis } from "../app.js";
 import User from "../models/userModel.js";
+import { fetchUser } from "../utils/fetchUser.js";
 import { model } from "../utils/geminiAIconfig.js";
+
 
 
 export const getAllChats = async (req, res) => {
     try {
-        let { id, email } = res.locals.jwtData;
+        const { id, email } = res.locals.jwtData;
 
-        let user = await User.findById({ _id: `${id}` });
-        let chats = user.chats;
+        const user = await fetchUser(id);
+        const chats = user.chats;
 
         return res.status(200).json({ message: "OK", chats });
 
@@ -19,10 +22,10 @@ export const getAllChats = async (req, res) => {
 
 export const newChat = async (req, res) => {
     try {
-        let { newChat } = req.body;
-        let { id, email } = res.locals.jwtData;
+        const { newChat } = req.body;
+        const { id, email } = res.locals.jwtData;
 
-        let user = await User.findById({ _id: `${id}` });
+        const user = await fetchUser(id);
 
         let newChatObj = {
             role: "user",
@@ -72,8 +75,9 @@ export const newChat = async (req, res) => {
             parts: [{ text }],
         }];
 
-        user.save();
+        await user.save();
 
+        await redis.setex(`user:${id}`, 3600, JSON.stringify(user));
 
         return res.status(200).json({ message: "OK", chats: user.chats });
 
@@ -88,10 +92,11 @@ export const deleteChats = async (req, res) => {
     try {
         let { id, email } = res.locals.jwtData;
 
-        let user = await User.findById({ _id: `${id}` });
-
+        let user = await fetchUser(id);
         user.chats = [];
-        user.save();
+        await user.save();
+
+        await redis.setex(`user:${id}`, 3600, JSON.stringify(user));
 
         return res.status(200).json({ message: "OK" });
 

@@ -1,4 +1,4 @@
-import { app } from "../app.js";
+import { app, redis } from "../app.js";
 import request from 'supertest';
 import mongoose from "mongoose";
 import User from "../models/userModel.js";
@@ -89,4 +89,32 @@ describe("user api", () => {
         expect(res.body.message).toBe("ERROR");
         expect(res.body.cause).toBe("token not present");
     })
+
+    test("test redis caching", async () => {
+
+        const uncachedUserData = await request(app)
+            .get('/api/v1/chat/allChats')
+            .set('Cookie', authCookie);
+
+        const cachedUserData = await request(app)
+            .get('/api/v1/chat/allChats')
+            .set('Cookie', authCookie);
+
+        expect(uncachedUserData.body.chats).toEqual(cachedUserData.body.chats);
+
+    })
+
+    // test("test rate limiting", async () => {
+    //     for (let i = 0; i <= 2; i++) {
+    //         const res = await request(app)
+    //             .get('/api/v1/chat/allChats')
+    //             .set('Cookie', authCookie);
+    //         if (i === 2) {
+    //             expect(res.status).toBe(429);
+    //         } else {
+    //             expect(res.status).toBe(200);
+    //         }
+    //     }
+    // })
+
 })

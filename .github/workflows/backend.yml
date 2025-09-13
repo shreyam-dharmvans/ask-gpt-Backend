@@ -16,6 +16,7 @@ jobs:
           MONGODB_URL : ${{ secrets.MONGODB_URL }}
           JWT_SECRET : ${{ secrets.JWT_SECRET }}
           COOKIE_SECRET : ${{ secrets.COOKIE_SECRET }}
+          REDIS_URL : ${{secrets.REDIS_URL}}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
